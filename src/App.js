@@ -1,19 +1,26 @@
 import './App.css';
-import Card from './Card'
+import Card from './components/Card/Card'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 
-const adrian = { id : 0, name: 'Adrian', color: 'red'}
-const oscar = { id : 1, name: 'Oscar', color: 'blue' }
-const edson = { id : 2, name: 'Adrian', color: 'green' }
-const carlos = { id : 3, name: 'Carlos', color: 'cyan' }
 
-const reactClass = [adrian, oscar, edson, carlos]
+const adrian = { name: 'Adrian', color: 'red', description: 'Lorem Ipsum '}
+const oscar = { name: 'Oscar', color: 'blue' , description: 'Lorem Ipsum '}
+const edson = { name: 'Adrian', color: 'green' , description: 'Lorem Ipsum '}
+const carlos = { name: 'Carlos', color: 'cyan' , description: 'Lorem Ipsum '}
+const jimmy = {  name: 'Jimmy', color: 'magenta' , description: 'Lorem Ipsum '}
+
+const reactClass = [adrian, oscar, edson, carlos, jimmy]
 
 function App() {
   return (
-    <div className="App">
+   
+    <Container fluid className="App">
+      <Row>
         {reactClass.map((student, index) =>
         <Card key = {index} student={student}/>)}
-    </div>
+      </Row>
+    </Container>
   );
 }
 

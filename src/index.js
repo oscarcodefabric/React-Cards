@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import ListApp from './ListApp';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from './reducers/rootReducer'
+
+const store = createStore(rootReducer)
 
 ReactDOM.render(
   <React.StrictMode>
-    <ListApp />
+    <Provider store={store}>
+      <ListApp />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

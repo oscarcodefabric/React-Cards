@@ -3,17 +3,10 @@ import List from './components/List/List'
 import ThemeContext from './context/ThemeContext'
 import { useState, useEffect } from 'react'
 import ThemeButton from './components/ThemeButton/ThemeButton'
+import { connect } from 'react-redux'
 
-const adrian = { name: 'Adrian', color: 'red', description: 'Lorem Ipsum '}
-const oscar = { name: 'Oscar', color: 'blue' , description: 'Lorem Ipsum '}
-const edson = { name: 'Edson', color: 'green' , description: 'Lorem Ipsum '}
-const carlos = { name: 'Carlos', color: 'cyan' , description: 'Lorem Ipsum '}
-const jimmy = {  name: 'Jimmy', color: 'magenta' , description: 'Lorem Ipsum '}
 
-const reactClass = [adrian, oscar, edson, carlos, jimmy]
-
-function ListApp() {
-
+const ListApp = ( { title } ) => {
   const [darkTheme, darkThemeSet] = useState(true)
   
   useEffect(() => {
@@ -28,9 +21,15 @@ function ListApp() {
         <ThemeContext.Provider value = {[darkTheme, darkThemeSet]}> 
             <ThemeButton></ThemeButton>
         </ThemeContext.Provider>
-        <List students = {reactClass}/>
+        <List/>
     </Container>
   );
 }
 
-export default ListApp;
+const mapStateToProps = state => ({
+  title : state.title 
+})
+
+const ListAppConnect = connect(mapStateToProps)(ListApp)
+
+export default ListAppConnect;

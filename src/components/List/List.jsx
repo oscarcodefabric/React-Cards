@@ -1,50 +1,25 @@
-import ListItem from '../ListItem/ListItem'
-import Row from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import { connect } from 'react-redux'
-import { addItem } from '../../actions/rootActions'
-import { useState } from 'react'
+import ListItem from "../ListItem/ListItem";
+import Row from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import { connect } from "react-redux";
 
-function List({ title, items, doAddItem }) {
-  const [addingElement, setAdding] = useState(false)
-  const handleClickAddElement = () => {
-    setAdding(!addingElement)
-  }
+
+function List({ title, items }) {
   return (
     <Row>
       <Col className="my-5">
         <h5>{title}</h5>
       </Col>
-      {items.map((student, index) =>
+      {items.map((student, index) => (
         <ListItem key={index} student={student} />
-      )}
-
-      {addingElement
-        ? <Form>
-          <Form.Control
-            //onChange={()=>handleClickCheckbox()}
-            className='list-item' />
-          <Button type="submit" onClick={() => (handleClickAddElement(), doAddItem({ name: 'Raul' }))}>Add New Item</Button>
-        </Form>
-        : <Col><Button onClick={() => handleClickAddElement()}>Add New Item</Button></Col>
-      }
-
+      ))}
     </Row>
-  )
+  );
 }
-
 
 const mapStateToProps = (state) => ({
   title: state.title,
-  items: state.reactClass
-})
+  items: state.reactClass,
+});
 
-const mapDispatchToProps = (dispatch) => ({
-  doAddItem: id => dispatch(addItem(id))
-
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(List)
+export default connect(mapStateToProps)(List);

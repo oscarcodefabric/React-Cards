@@ -8,12 +8,13 @@ const initialState = {
   title: 'React Class',
   reactClass: [
     adrian, oscar, edson, carlos, jimmy
-  ]
+  ],
+  current_id: 6
 }
 
 export default (state = initialState, action) => {
   if (action.type === 'ADD_ITEM') {
-    return { ...state, reactClass: [...state.reactClass, action.item] }
+    return { ...state, reactClass: [...state.reactClass, {...action.item, id: state.current_id}], current_id: state.current_id + 1 }
   }
 
   if (action.type === 'SET_CHECK') {

@@ -20,10 +20,10 @@ function AddButton({ doAddItem }) {
             <Form.Control onChange={handleChange} className="list-item" />
             <Button
               type="submit"
-              onClick={() => (
-                handleClickAddElement(),
-                doAddItem({ name: element, checked: false })
-              )}
+              onClick={() => 
+                doAddItem({ name: element, checked: false },
+                handleClickAddElement())
+              }
             >
               Add New Item
             </Button>

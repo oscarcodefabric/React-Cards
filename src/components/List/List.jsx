@@ -2,9 +2,15 @@ import ListItem from "../ListItem/ListItem";
 import Row from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import { connect } from "react-redux";
+import { fetchPokemon } from "../../actions/rootActions";
+import { useEffect } from "react";
 
 
-function List({ title, items }) {
+function List({ title, items, doFetchPokemon }) {
+  useEffect(() => {
+    doFetchPokemon()
+  }, [doFetchPokemon])
+  
   return (
     <Row>
       <Col className="my-5">
@@ -19,7 +25,11 @@ function List({ title, items }) {
 
 const mapStateToProps = (state) => ({
   title: state.title,
-  items: state.reactClass,
+  items: state.pokemon,
 });
 
-export default connect(mapStateToProps)(List);
+const mapDispatchToProps = () => (dispatch) => ({
+  doFetchPokemon: () => dispatch(fetchPokemon())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

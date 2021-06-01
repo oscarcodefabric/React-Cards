@@ -1,45 +1,11 @@
 import { ADD_ITEM, SET_CHECK, DELETE_ITEM } from "../constants/rootConstants";
 
-const adrian = {
-  id: 1,
-  name: "Adrian",
-  color: "red",
-  description: "Lorem Ipsum ",
-  checked: true,
-};
-const oscar = {
-  id: 2,
-  name: "Oscar",
-  color: "blue",
-  description: "Lorem Ipsum ",
-  checked: true,
-};
-const edson = {
-  id: 3,
-  name: "Edson",
-  color: "green",
-  description: "Lorem Ipsum ",
-  checked: true,
-};
-const carlos = {
-  id: 4,
-  name: "Carlos",
-  color: "cyan",
-  description: "Lorem Ipsum ",
-  checked: true,
-};
-const jimmy = {
-  id: 5,
-  name: "Jimmy",
-  color: "magenta",
-  description: "Lorem Ipsum ",
-  checked: true,
-};
-
 const initialState = {
   title: "React Class",
-  reactClass: [adrian, oscar, edson, carlos, jimmy],
-  current_id: 6,
+  pokemon: [],
+  current_id: 0,
+  isLoadingItems: false,
+  errorMessage: ''
 };
 
 const Reducer = (state = initialState, action) => {
@@ -47,17 +13,23 @@ const Reducer = (state = initialState, action) => {
     case ADD_ITEM : {
       return {
         ...state,
-        reactClass: [
-          ...state.reactClass,
-          { ...action.item, id: state.current_id },
+        pokemon: [
+          ...state.pokemon,
+          { ...action.item, id: state.current_id, checked: false },
         ],
-        current_id: state.current_id + 1,
+        current_id: state.current_id + 1
       };
     }
     case SET_CHECK: {
-      const filtered = state.reactClass.map((checkbox) => {
-        if (checkbox.id !== action.id) {
+      const filtered = state.pokemon.map((checkbox) => {
+        if (checkbox.name !== action.id) {
           return checkbox;
+        }
+        if (checkbox.checked === undefined){
+          return {
+            ...checkbox,
+            checked: true
+          }
         }
         return {
           ...checkbox,
@@ -65,19 +37,46 @@ const Reducer = (state = initialState, action) => {
         };
       });
       console.log(filtered);
-      const newState = { ...state, reactClass: filtered };
+      const newState = { ...state, pokemon: filtered };
       return newState;
+    }
+    case 'FETCH_POKEMON_SUCCESS': {
+      console.log(action.items)
+      const pokemon = action.items
+      return {
+        ...state, pokemon: pokemon,
+        isLoading: false
+      }
+    }
+
+    case 'FETCH_POKEMON_START': {
+      return {
+        ...state, 
+        errorMessage: '',
+        pokemon: [],
+        isLoading: true
+      }
+    }
+    case 'FETCH_POKEMON_ERROR': {
+      const {error} = action
+      return {
+        ...state, 
+        errorMessage: error,
+        isLoading: false
+      }
     }
     case DELETE_ITEM: {
-      const filter = (item) => {
-        if (item.id !== action.id) {
-          return item;
+      console.log(action.id)
+      const nameFilter = (poke) => {
+        if (poke.name !== action.id) {
+          return poke;
         }
       }
-      const filtered = state.reactClass.filter(filter);
-      const newState = { ...state, reactClass: filtered };
+      const filtered = state.pokemon.filter(nameFilter);
+      const newState = { ...state, pokemon: filtered };
       return newState;
     }
+    
     default:
       return state;
   }

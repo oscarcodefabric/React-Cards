@@ -1,7 +1,7 @@
 import { ADD_ITEM, SET_CHECK, DELETE_ITEM } from "../constants/rootConstants";
 
 const initialState = {
-  title: "React React",
+  title: "React Test",
   pokemon: [],
   current_id: 0,
   isLoadingItems: false,
